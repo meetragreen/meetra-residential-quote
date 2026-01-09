@@ -69,7 +69,7 @@ const FillQuote = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/settings');
+        const res = await axios.get('https://meetra-residential-quote.onrender.com/api/settings');
         setFormData(prev => ({ ...prev, quotationSeq: res.data.quotationSequence }));
         setHasSavedTemplate(res.data.hasTemplate);
       } catch (err) {
@@ -89,7 +89,7 @@ const FillQuote = () => {
       
       try {
         setIsUploading(true);
-        await axios.post('http://localhost:5000/api/settings/upload-template', data);
+        await axios.post('https://meetra-residential-quote.onrender.com/api/settings/upload-template', data);
         setHasSavedTemplate(true);
         alert("Template Saved to Server!");
       } catch (err) {
@@ -156,7 +156,7 @@ const FillQuote = () => {
         
         // --- THIS IS THE FIX ---
         // We now call the new route we just created in index.js
-        const res = await fetch('http://localhost:5000/api/download-template');
+        const res = await fetch('https://meetra-residential-quote.onrender.com/api/download-template');
         
         if (!res.ok) throw new Error("Template not found on server");
         pdfBytes = await res.arrayBuffer();
@@ -259,10 +259,10 @@ const FillQuote = () => {
       link.click();
 
       // UPDATE SEQUENCE ON SERVER
-      await axios.put('http://localhost:5000/api/settings/update-sequence', { 
+      await axios.put('https://meetra-residential-quote.onrender.com/api/settings/update-sequence', { 
         currentNo: formData.quotationSeq 
       });
-      const res = await axios.get('http://localhost:5000/api/settings');
+      const res = await axios.get('https://meetra-residential-quote.onrender.com/api/settings');
       setFormData(prev => ({ ...prev, quotationSeq: res.data.quotationSequence }));
 
     } catch (err) {
