@@ -194,16 +194,16 @@ const FillQuote = () => {
       // --- PAGE 5 ---
       const p5 = 4;
       draw(p5, formData.panelSeries, 119, 643); // Module Tech (Topcon etc)
-      draw(p5, formData.panelWattage, 288, 657); // Panel Wattage (Editable)
-      draw(p5, formData.panelMake, 395, 650);
-      draw(p5, formData.panelQty, 537, 650);
-      draw(p5, `${formData.inverterCapacity} kW`, 188, 617);
-      draw(p5, formData.inverterMake, 397, 610);
+      draw(p5, formData.panelWattage, 292, 659); // Panel Wattage (Editable)
+      draw(p5, formData.panelMake, 395, 655);
+      draw(p5, formData.panelQty, 537, 655);
+      draw(p5, `${formData.inverterCapacity}`, 191, 619);
+      draw(p5, formData.inverterMake, 397, 614);
       draw(p5, formData.rafterSize, 161, 424);
       draw(p5, formData.rafterSize, 264, 424);
       draw(p5, formData.purlinSize, 161, 404);
-      draw(p5, formData.structureBrand, 398, 424);
-      draw(p5, formData.structureQty, 535, 424);
+      draw(p5, formData.structureBrand, 398, 430);
+      draw(p5, formData.structureQty, 535, 430);
 
       // --- PAGE 6 ---
       const p6 = 5;
