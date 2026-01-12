@@ -45,7 +45,7 @@ const FillQuote = () => {
     location: '',
     
     // Tech Specs
-    panelWattage: '550 Wp', // Default value
+    panelWattage: '550', // Default value
     panelMake: 'Adani',
     panelSeries: 'Topcon',
     panelQty: '',
@@ -194,7 +194,7 @@ const FillQuote = () => {
       // --- PAGE 5 ---
       const p5 = 4;
       draw(p5, formData.panelSeries, 119, 643); // Module Tech (Topcon etc)
-      draw(p5, formData.panelWattage, 285, 655); // Panel Wattage (Editable)
+      draw(p5, formData.panelWattage, 288, 657); // Panel Wattage (Editable)
       draw(p5, formData.panelMake, 395, 650);
       draw(p5, formData.panelQty, 537, 650);
       draw(p5, `${formData.inverterCapacity} kW`, 188, 617);
