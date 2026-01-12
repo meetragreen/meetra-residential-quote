@@ -39,13 +39,13 @@ const FillQuote = () => {
   // --- FORM DATA STATE ---
   const [formData, setFormData] = useState({
     quotationSeq: '',
-    date: getTodayDate(), 
+    date: getTodayDate(),
     customerName: '',
     capacityKW: '',
     location: '',
     
     // Tech Specs
-    panelWattage: '550',
+    panelWattage: '550 Wp', // Default value
     panelMake: 'Adani',
     panelSeries: 'Topcon',
     panelQty: '',
@@ -153,14 +153,9 @@ const FillQuote = () => {
       if (templateFile) {
         pdfBytes = await templateFile.arrayBuffer();
       } else if (hasSavedTemplate) {
-        
-        // --- THIS IS THE FIX ---
-        // We now call the new route we just created in index.js
         const res = await fetch('https://meetra-residential-quote.onrender.com/api/download-template');
-        
         if (!res.ok) throw new Error("Template not found on server");
         pdfBytes = await res.arrayBuffer();
-        
       } else {
         alert("⚠️ No template found! Please upload 'Proposal (2).pdf' once.");
         return;
@@ -175,7 +170,7 @@ const FillQuote = () => {
       const pages = pdfDoc.getPages();
       const currentMath = calculateMath();
       const finalQuoteNo = getFormattedQuoteNo();
-      const formattedName = toTitleCase(formData.customerName); // Capitalize Name
+      const formattedName = toTitleCase(formData.customerName);
 
       const draw = (pageIdx, text, x, y, size=10, isBold=false, color=rgb(0,0,0)) => {
         if (!pages[pageIdx]) return;
@@ -190,7 +185,6 @@ const FillQuote = () => {
       draw(p2, `${formData.capacityKW} kW`, 252, 455, 12, true);
       draw(p2, formData.location, 252, 413);
 
-      // CENTERED NAME (GREEN)
       const submittedSize = 12;
       const textWidth = fontBold.widthOfTextAtSize(formattedName, submittedSize);
       const pageWidth = pages[p2].getWidth();
@@ -199,25 +193,25 @@ const FillQuote = () => {
 
       // --- PAGE 5 ---
       const p5 = 4;
-      draw(p5, formData.panelSeries, 119, 643);
-      draw(p5, formData.panelWattage, 290, 658);
-      draw(p5, formData.panelMake, 395, 652);
-      draw(p5, formData.panelQty, 537, 652);
-      draw(p5, `${formData.inverterCapacity} `, 192, 619);
-      draw(p5, formData.inverterMake, 397, 613);
+      draw(p5, formData.panelSeries, 119, 643); // Module Tech (Topcon etc)
+      draw(p5, formData.panelWattage, 285, 655); // Panel Wattage (Editable)
+      draw(p5, formData.panelMake, 395, 650);
+      draw(p5, formData.panelQty, 537, 650);
+      draw(p5, `${formData.inverterCapacity} kW`, 188, 617);
+      draw(p5, formData.inverterMake, 397, 610);
       draw(p5, formData.rafterSize, 161, 424);
-      draw(p5, formData.rafterSize, 265, 424);
-      draw(p5, formData.purlinSize, 161, 405);
-      draw(p5, formData.structureBrand, 396, 436);
-      draw(p5, formData.structureQty, 535, 436);
+      draw(p5, formData.rafterSize, 264, 424);
+      draw(p5, formData.purlinSize, 161, 404);
+      draw(p5, formData.structureBrand, 398, 424);
+      draw(p5, formData.structureQty, 535, 424);
 
       // --- PAGE 6 ---
       const p6 = 5;
-      draw(p6, formData.laType, 150, 450);
+      draw(p6, formData.laType, 152, 444);
 
       // --- PAGE 7 ---
       const p7 = 6;
-      draw(p7, formattedName, 40, 723, 11, true);
+      draw(p7, formattedName, 40, 722, 11, true);
       draw(p7, finalQuoteNo, 341, 723, 10);
       draw(p7, formData.date, 506, 722, 10);
 
@@ -228,27 +222,21 @@ const FillQuote = () => {
       draw(p7, formData.capacityKW, 279, 567);
       draw(p7, formatCurrency(formData.structureTotalCost), 476, 567); 
 
-      // Table A
-      draw(p7, formatCurrency(currentMath.field20), 476, 486, 12, true, rgb(1, 1, 1) );
+      draw(p7, formatCurrency(currentMath.field20), 451, 486, 12, true, rgb(1, 1, 1));
       
-      // Table B
       draw(p7, formData.capacityKW, 280, 382);
-      
-      // FIX: Used field21 (Total) instead of field26 (Subsidy)
-      draw(p7, formatCurrency(currentMath.field26), 476, 382); 
-      
-      // Subsidy Refundable
-      draw(p7, formatCurrency(currentMath.field26), 476, 343,12, true, rgb(1, 1, 1));          
+      draw(p7, formatCurrency(currentMath.field21), 468, 382); 
+      draw(p7, formatCurrency(currentMath.field26), 468, 341, 12, true, rgb(1, 1, 1));          
 
-      draw(p7, formatCurrency(currentMath.field20), 476, 291);
-      draw(p7, formatCurrency(formData.discount), 476, 266);      
-      draw(p7, formatCurrency(currentMath.field23), 476, 239, 12, true, rgb(0,0.5,0));
-      draw(p7, formatCurrency(currentMath.field24), 476, 214);          
-      draw(p7, formatCurrency(currentMath.field25), 476, 184, 12, true, rgb(0,0.5,0));
+      draw(p7, formatCurrency(currentMath.field20), 461, 290);
+      draw(p7, formatCurrency(formData.discount), 461, 265);      
+      draw(p7, formatCurrency(currentMath.field23), 461, 239, 12, true, rgb(0.8,0,0));
+      draw(p7, formatCurrency(currentMath.field24), 461, 214);          
+      draw(p7, formatCurrency(currentMath.field25), 461, 184, 12, true, rgb(0,0.5,0));
 
       // --- PAGE 8 ---
       const p8 = 7;
-      draw(p8, formData.inverterWarranty, 52, 553, 10, true);
+      draw(p8, formData.inverterWarranty, 53, 549, 12, true);
 
       // SAVE
       const savedBytes = await pdfDoc.save();
@@ -258,7 +246,6 @@ const FillQuote = () => {
       link.download = `Quote_${finalQuoteNo}.pdf`;
       link.click();
 
-      // UPDATE SEQUENCE ON SERVER
       await axios.put('https://meetra-residential-quote.onrender.com/api/settings/update-sequence', { 
         currentNo: formData.quotationSeq 
       });
@@ -267,7 +254,7 @@ const FillQuote = () => {
 
     } catch (err) {
       console.error(err);
-      alert("Error generating PDF. Please upload the template file again.");
+      alert("Error generating PDF.");
     }
   };
 
@@ -315,27 +302,43 @@ const FillQuote = () => {
           <div className="space-y-5 bg-gray-50 p-5 rounded-xl border border-gray-200">
             <h3 className="font-bold text-gray-700 text-lg border-b pb-2 flex items-center gap-2"><Zap size={18}/> Technical Specs</h3>
             <div className="space-y-3">
+              
+              {/* ROW 1: Panel Make & Panel Wattage (NEW) */}
               <div className="grid grid-cols-2 gap-3">
                  <input name="panelMake" defaultValue="Adani" onChange={handleChange} className="border p-2 rounded" placeholder="Panel Make" />
-                 <input name="panelQty" onChange={handleChange} className="border p-2 rounded" placeholder="Panel Qty" />
+                 
+                 {/* NEW EDITABLE WATTAGE INPUT */}
+                 <input name="panelWattage" value={formData.panelWattage} onChange={handleChange} className="border p-2 rounded" placeholder="Watt Peak (e.g. 550 Wp)" />
+              </div>
+
+              {/* ROW 2: Series (Dropdown) & Qty */}
+              <div className="grid grid-cols-2 gap-3">
                  <select name="panelSeries" value={formData.panelSeries} onChange={handleChange} className="border p-2 rounded bg-white">
                    <option value="Bi-facial">Bi-facial</option>
                    <option value="Topcon">Topcon</option>
                    <option value="HJT">HJT</option>
                  </select>
+                 <input name="panelQty" onChange={handleChange} className="border p-2 rounded" placeholder="Panel Qty" />
               </div>
+
+              {/* ROW 3: Inv Make & Inv Capacity */}
               <div className="grid grid-cols-2 gap-3">
                  <input name="inverterMake" defaultValue="UTL" onChange={handleChange} className="border p-2 rounded" placeholder="Inv Make" />
-                 <input name="inverterCapacity" onChange={handleChange} className="border p-2 rounded" placeholder="Inv kw" />
+                 <input name="inverterCapacity" onChange={handleChange} className="border p-2 rounded" placeholder="Inv kW" />
               </div>
+              
+              {/* ROW 4: Struct Brand & Qty */}
               <div className="grid grid-cols-2 gap-3">
                  <input name="structureBrand" defaultValue="Hindustar" onChange={handleChange} className="border p-2 rounded" placeholder="Struct. Brand" />
                  <input name="structureQty" defaultValue="150 Kg" onChange={handleChange} className="border p-2 rounded" placeholder="Struct. Qty" />
               </div>
+
+              {/* ROW 5: Purlin & Rafter */}
               <div className="grid grid-cols-2 gap-3">
                  <input name="purlinSize" defaultValue="40x40" onChange={handleChange} className="border p-2 rounded" placeholder="Purlin" />
                  <input name="rafterSize" defaultValue="80x40" onChange={handleChange} className="border p-2 rounded" placeholder="Rafter/Lag" />
               </div>
+
             </div>
           </div>
 
