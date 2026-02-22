@@ -69,7 +69,7 @@ const FillQuote = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await axios.get('https://meetra-residential-quote.onrender.com/api/settings');
+        const res = await axios.get('https://meetra-residential-quote-bwkx.onrender.com/api/settings');
         setFormData(prev => ({ ...prev, quotationSeq: res.data.quotationSequence }));
         setHasSavedTemplate(res.data.hasTemplate);
       } catch (err) {
@@ -89,7 +89,7 @@ const FillQuote = () => {
       
       try {
         setIsUploading(true);
-        await axios.post('https://meetra-residential-quote.onrender.com/api/settings/upload-template', data);
+        await axios.post('https://meetra-residential-quote-bwkx.onrender.com/api/settings/upload-template', data);
         setHasSavedTemplate(true);
         alert("Template Saved to Server!");
       } catch (err) {
@@ -153,7 +153,7 @@ const FillQuote = () => {
       if (templateFile) {
         pdfBytes = await templateFile.arrayBuffer();
       } else if (hasSavedTemplate) {
-        const res = await fetch('https://meetra-residential-quote.onrender.com/api/download-template');
+        const res = await fetch('https://meetra-residential-quote-bwkx.onrender.com/api/download-template');
         if (!res.ok) throw new Error("Template not found on server");
         pdfBytes = await res.arrayBuffer();
       } else {
@@ -246,10 +246,10 @@ const FillQuote = () => {
       link.download = `Quote_${finalQuoteNo}.pdf`;
       link.click();
 
-      await axios.put('https://meetra-residential-quote.onrender.com/api/settings/update-sequence', { 
+      await axios.put('https://meetra-residential-quote-bwkx.onrender.com/api/settings/update-sequence', { 
         currentNo: formData.quotationSeq 
       });
-      const res = await axios.get('https://meetra-residential-quote.onrender.com/api/settings');
+      const res = await axios.get('https://meetra-residential-quote-bwkx.onrender.com/api/settings');
       setFormData(prev => ({ ...prev, quotationSeq: res.data.quotationSequence }));
 
     } catch (err) {
