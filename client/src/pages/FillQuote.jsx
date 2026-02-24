@@ -179,11 +179,11 @@ const FillQuote = () => {
 
       // --- PAGE 2 ---
       const p2 = 1;
-      draw(p2, finalQuoteNo, 252, 653, 10, true);
-      draw(p2, formData.date, 252, 599); 
-      draw(p2, formattedName, 252, 503, 12, true);
-      draw(p2, `${formData.capacityKW} kW`, 252, 455, 12, true);
-      draw(p2, formData.location, 252, 413);
+      draw(p2, finalQuoteNo, 322, 653, 12, true);
+      draw(p2, formData.date, 322, 599); 
+      draw(p2, formattedName, 322, 504, 13, true);
+      draw(p2, `${formData.capacityKW} kW`, 322, 457, 12, true);
+      draw(p2, formData.location, 322, 412);
 
       const submittedSize = 12;
       const textWidth = fontBold.widthOfTextAtSize(formattedName, submittedSize);
