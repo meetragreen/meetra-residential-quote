@@ -62,7 +62,7 @@ const FillQuote = () => {
     systemRate: '',
     structureTotalCost: '',
     discount: '0',
-    inverterWarranty: '10',
+    inverterWarranty: '10', // Default 10, now editable
   });
 
   // --- ON LOAD ---
@@ -199,15 +199,15 @@ const FillQuote = () => {
       draw(p5, formData.panelQty, 537, 655);
       draw(p5, `${formData.inverterCapacity}`, 191, 619);
       draw(p5, formData.inverterMake, 397, 614);
-      draw(p5, formData.rafterSize, 161, 424);
-      draw(p5, formData.rafterSize, 264, 424);
-      draw(p5, formData.purlinSize, 161, 404);
+      draw(p5, formData.rafterSize, 148, 469);
+      draw(p5, formData.rafterSize, 256, 469);
+      draw(p5, formData.purlinSize, 148, 449);
       draw(p5, formData.structureBrand, 398, 430);
       draw(p5, formData.structureQty, 535, 430);
 
       // --- PAGE 6 ---
       const p6 = 5;
-      draw(p6, formData.laType, 152, 444);
+      draw(p6, formData.laType, 113, 449);
 
       // --- PAGE 7 ---
       const p7 = 6;
@@ -303,11 +303,9 @@ const FillQuote = () => {
             <h3 className="font-bold text-gray-700 text-lg border-b pb-2 flex items-center gap-2"><Zap size={18}/> Technical Specs</h3>
             <div className="space-y-3">
               
-              {/* ROW 1: Panel Make & Panel Wattage (NEW) */}
+              {/* ROW 1: Panel Make & Panel Wattage */}
               <div className="grid grid-cols-2 gap-3">
                  <input name="panelMake" defaultValue="Adani" onChange={handleChange} className="border p-2 rounded" placeholder="Panel Make" />
-                 
-                 {/* NEW EDITABLE WATTAGE INPUT */}
                  <input name="panelWattage" value={formData.panelWattage} onChange={handleChange} className="border p-2 rounded" placeholder="Watt Peak (e.g. 550 Wp)" />
               </div>
 
@@ -354,7 +352,12 @@ const FillQuote = () => {
                <label className="text-xs font-bold text-gray-500 uppercase">Structure Cost (No GST added)</label>
                <input name="structureTotalCost" type="number" onChange={handleChange} className="w-full border p-2 rounded" placeholder="e.g. 25000" />
              </div>
-             <input name="discount" type="number" defaultValue="0" onChange={handleChange} className="w-full border p-2 rounded" placeholder="Discount" />
+             
+             {/* --- NEW: Discount & Warranty Grid --- */}
+             <div className="grid grid-cols-2 gap-3">
+                 <input name="discount" type="number" defaultValue="0" onChange={handleChange} className="w-full border p-2 rounded" placeholder="Discount" />
+                 <input name="inverterWarranty" type="number" value={formData.inverterWarranty} onChange={handleChange} className="w-full border p-2 rounded" placeholder="Warranty (Yrs)" />
+             </div>
              
              <div className="bg-white p-4 rounded-lg border border-green-100 space-y-2 text-sm">
                 <div className="flex justify-between text-gray-600"><span>Base System Cost:</span> <span>₹ {formatCurrency(calculateMath().baseSystemCost)}</span></div>
