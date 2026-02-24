@@ -185,7 +185,7 @@ const FillQuote = () => {
       draw(p2, `${formData.capacityKW} kW`, 322, 457, 12, true);
       draw(p2, formData.location, 322, 412, 12, true);
 
-      const submittedSize = 14;
+      const submittedSize = 15;
       const textWidth = fontBold.widthOfTextAtSize(formattedName, submittedSize);
       const pageWidth = pages[p2].getWidth();
       const centerX = (pageWidth - textWidth) / 2;
@@ -195,15 +195,15 @@ const FillQuote = () => {
       const p5 = 4;
       draw(p5, formData.panelSeries, 119, 643); // Module Tech (Topcon etc)
       draw(p5, formData.panelWattage, 292, 659); // Panel Wattage (Editable)
-      draw(p5, formData.panelMake, 395, 655);
+      draw(p5, formData.panelMake, 395, 660);
       draw(p5, formData.panelQty, 537, 655);
       draw(p5, `${formData.inverterCapacity}`, 191, 619);
-      draw(p5, formData.inverterMake, 397, 614);
+      draw(p5, formData.inverterMake, 395, 568);
       draw(p5, formData.rafterSize, 148, 469);
       draw(p5, formData.rafterSize, 256, 469);
       draw(p5, formData.purlinSize, 148, 449);
-      draw(p5, formData.structureBrand, 398, 430);
-      draw(p5, formData.structureQty, 535, 430);
+      draw(p5, formData.structureBrand, 395, 459);
+      draw(p5, formData.structureQty, 537, 459);
 
       // --- PAGE 6 ---
       const p6 = 5;
@@ -236,7 +236,7 @@ const FillQuote = () => {
 
       // --- PAGE 8 ---
       const p8 = 7;
-      draw(p8, formData.inverterWarranty, 53, 549, 12, true);
+      draw(p8, formData.inverterWarranty, 52, 550, 12, true);
 
       // SAVE
       const savedBytes = await pdfDoc.save();
