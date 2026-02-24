@@ -236,7 +236,7 @@ const FillQuote = () => {
 
       // --- PAGE 8 ---
       const p8 = 7;
-      draw(p8, formData.inverterWarranty, 52, 550, 12, true);
+      draw(p8, formData.inverterWarranty, 56, 550, 12, true);
 
       // SAVE
       const savedBytes = await pdfDoc.save();
