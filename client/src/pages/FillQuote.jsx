@@ -180,16 +180,16 @@ const FillQuote = () => {
       // --- PAGE 2 ---
       const p2 = 1;
       draw(p2, finalQuoteNo, 322, 653, 12, true);
-      draw(p2, formData.date, 322, 599); 
+      draw(p2, formData.date, 322, 599, 12, true); 
       draw(p2, formattedName, 322, 504, 13, true);
       draw(p2, `${formData.capacityKW} kW`, 322, 457, 12, true);
-      draw(p2, formData.location, 322, 412);
+      draw(p2, formData.location, 322, 412, 12, true);
 
-      const submittedSize = 12;
+      const submittedSize = 14;
       const textWidth = fontBold.widthOfTextAtSize(formattedName, submittedSize);
       const pageWidth = pages[p2].getWidth();
       const centerX = (pageWidth - textWidth) / 2;
-      draw(p2, formattedName, centerX, 174, submittedSize, true, rgb(0, 0.5, 0));
+      draw(p2, formattedName, centerX, 200, submittedSize, true, rgb(0, 0.5, 0));
 
       // --- PAGE 5 ---
       const p5 = 4;
